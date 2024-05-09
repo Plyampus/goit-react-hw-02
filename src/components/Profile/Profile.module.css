@@ -1,0 +1,56 @@
+.container {
+    border: 2px solid black;
+    border-radius: 8px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    width: 280px;
+}
+.containerMini {
+    padding: 16px;
+}
+.img {
+    border: none;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    background-color: black;
+}
+.name {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    margin: 8px;
+}
+.tag {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    margin: 4px;
+    color: gray;
+}
+.location {
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    margin: 4px;
+    color: gray;
+}
+.list {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    list-style: none;
+}
+.stats {
+    display: inline-block;
+    padding: 4px;
+    border: 1.5px solid rgb(68, 68, 68);
+    background-color: rgb(188, 183, 183);
+    width: 100%;
+}
+p {
+    margin: 4px;
+}
