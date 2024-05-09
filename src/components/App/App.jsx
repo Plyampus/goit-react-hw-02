@@ -1,23 +1,63 @@
-import Profile from '../Profile/Profile';
-import userData from '../../userData.json';
-import FriendList from '../FriendList/FriendList.jsx';
-import friends from '../../friends.json';
-import transactions from '../../transactions.json';
-import TransactionHistory from '../TransactionHistory/TransactionHistory.jsx';
-import css from './App.module.css';
+import { useState, useEffect } from 'react';
 
-export default function App() {
+import Description from '../Description/Description';
+import Options from '../Options/Options';
+import Feedback from '../Feedback/Feedback';
+import Notification from '../Notification/Notofocation';
+
+import resp from '../../resp.json';
+
+const App = () => {
+  const [feedback, setFeedback] = useState(() => {
+    const savedFeedback = localStorage.getItem('feedback');
+    return savedFeedback
+      ? JSON.parse(savedFeedback)
+      : { good: 0, neutral: 0, bad: 0 };
+  });
+
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
+
+  const updateFeedback = feedbackType => {
+    setFeedback(prevFeedback => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
+    }));
+  };
+
+  const handleReset = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
+
+  useEffect(() => {
+    localStorage.setItem('feedback', JSON.stringify(feedback));
+  }, [feedback]);
+
   return (
-    <div className={css.container}>
-      <Profile
-        name={userData.username}
-        tag={userData.tag}
-        location={userData.location}
-        image={userData.avatar}
-        stats={userData.stats}
+    <div>
+      <Description
+        name={'Sip Happens Café'}
+        descr={
+          'Please leave your feedback about our service by selecting one of the options below.'
+        }
       />
-      <FriendList friends={friends} />
-      <TransactionHistory items={transactions} />
+      <Options
+        totalFeedback={totalFeedback}
+        handleReset={handleReset}
+        updateFeedback={updateFeedback}
+        resp={resp}
+      />
+      {totalFeedback > 0 ? (
+        <Feedback
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+          feedback={feedback}
+        />
+      ) : (
+        <Notification message="No feedback yet" />
+      )}
     </div>
   );
-}
+};
+
+export default App;
